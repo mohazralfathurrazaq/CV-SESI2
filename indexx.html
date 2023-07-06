@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Peta Foto Studio Sukabumi</title>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Peta Foto Studio Sukabumi</h1>
+    <div id="map"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/OpenLayers.js"></script>
+    <script>
+        function initMap() {
+            // Buat objek peta
+            var map = new OpenLayers.Map("map");
+
+            // Buat layer untuk OpenStreetMap
+            var mapLayer = new OpenLayers.Layer.OSM();
+
+            // Tambahkan layer ke peta
+            map.addLayer(mapLayer);
+
+            // Tentukan koordinat dan level zoom awal (Kota Sukabumi)
+            var lonLat = new OpenLayers.LonLat(106.9273, -6.9222).transform(
+                new OpenLayers.Projection("EPSG:4326"), // WGS84
+                map.getProjectionObject() // Sistem koordinat peta
+            );
+            var zoomLevel = 13;
+
+            // Posisikan peta pada koordinat dan level zoom awal
+            map.setCenter(lonLat, zoomLevel);
+
+            // Tambahkan marker foto studio 
+            var markers = [
+                {
+                    name: 'DIGI PHOTO Lab & Stuido SUKABUMI ',
+                    lon: 106.93524775418986,
+                    lat: -6.917751437018712, 
+                    url: 'https://goo.gl/maps/4ioykCv4YeutKbzEA'
+                },
+                {
+                    name: 'Imaji Foto Studio',
+                    lon: 106.93592605336322,
+                    lat: -6.918141719891637,  
+                    url: 'https://goo.gl/maps/wv38qjSonDceWN3F8'
+
+                },
+                {
+                    name: 'Kita Foto Studio',
+                    lon: 106.90470382254317,
+                    lat: -6.919017838404552,
+                    url: 'https://goo.gl/maps/2dwosThBBYaCfDqd9'
+
+                },
+                {
+                    name: 'HAI STUDIOS',
+                    lon: 106.9422162744589,
+                    lat: -6.940858067507676, 
+                    url: 'https://goo.gl/maps/DSgYC3gixF7XAxfL9'
+
+                },
+                {
+                    name: 'Onic Photo Studio',
+                    lon: 106.93498146613638,
+                    lat: -6.932650239024546, 
+                    url: 'https://goo.gl/maps/st8z9DgQYUrxtyFp9'
+
+                },
+                {
+                    name: 'Yakima Foto',
+                    lon: 106.93677548395856,
+                    lat: -6.91414947932479, 
+                    url: 'https://goo.gl/maps/S1FbwsskxF1ZDSVt5'
+
+                },
+                {
+                    name: 'Kertas Warna',
+                    lon: 106.90259253038407,
+                    lat: -6.927230141740544, 
+                    url: 'https://goo.gl/maps/j8xQhiMKJQmJZFH87'
+
+                },
+                {
+                    name: 'Garis Photography',
+                    lon: 106.93601161907422,
+                    lat: -6.9154765195653765, 
+                    url: 'https://goo.gl/maps/4P5HFRh3HgtoU7Aq8'
+                },
+                {
+                    name: 'Estetik Studio',
+                    lon: 106.93314712575791,
+                    lat: -6.954527746004673, 
+                    url: 'https://goo.gl/maps/RDwjuqzAWAX3VDnXA'
+                }
+            ];
+
+            // Buat layer untuk marker
+            var markerLayer = new OpenLayers.Layer.Markers("Markers");
+            map.addLayer(markerLayer);
+
+            // Tambahkan marker ke layer
+            for (var i = 0; i < markers.length; i++) {
+                var marker = new OpenLayers.Marker(
+                    new OpenLayers.LonLat(markers[i].lon, markers[i].lat).transform(
+                        new OpenLayers.Projection("EPSG:4326"), // WGS84
+                        map.getProjectionObject() // Sistem koordinat peta
+                    )
+                );
+                markerLayer.addMarker(marker);
+
+                // Tambahkan event click untuk mengarahkan ke halaman destinasi
+                marker.events.register('click', marker, function() {
+                    window.location.href = this.url;
+                });
+            }
+        }
+
+        // Panggil fungsi initMap saat halaman selesai diload
+        window.onload = initMap;
+    </script>
+</body>
+</html>
